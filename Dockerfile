@@ -1,3 +1,4 @@
+FROM golang:1.8.3-alpine3.6
 
 MAINTAINER Grigorii Sokolik <g.sokol99@g-sokol.info>
 
