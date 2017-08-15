@@ -6,7 +6,7 @@
 # Distributed under terms of the MIT license.
 #
 
-[ -d "/ssh" ] && [ "$(ls -A /ssh)"] && mkdir /root/.ssh \
+[ -d "/ssh" ] && [ "$(ls -A /ssh)" ] && mkdir /root/.ssh \
   && chmod 700 /root/.ssh \
   && cp /ssh/* /root/.ssh/ \
   && chmod 600 /root/.ssh/*; \
