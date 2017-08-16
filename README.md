@@ -12,12 +12,33 @@ This is an image for CI builder machines for dockerized golang apps to upload de
 
 ## How is it works?
 
+### Simple way
+
 ```sh
-docker run -it --rm -v `pwd`:/app -e APP_PKG_NAME="github.com/my-login/my-app-repo" gsokol/go-glide-vendor-loader:$TAG
+docker run -it --rm \
+  -v `pwd`:/app \
+  -e APP_PKG_NAME="github.com/my-login/my-app-repo" \
+  gsokol/go-glide-vendor-loader:$TAG
 ```
 
-Or, if you have private repos:
+### Sharing ssh dir
 
 ```sh
-docker run -it --rm -v `pwd`:/app -v $HOME/.ssh:/ssh:ro -e APP_PKG_NAME="github.com/my-login/my-app-repo" gsokol/go-glide-vendor-loader:$TAG
+docker run -it --rm \
+  -v `pwd`:/app \
+  -v $HOME/.ssh:/ssh:ro \
+  -e APP_PKG_NAME="github.com/my-login/my-app-repo" \
+  gsokol/go-glide-vendor-loader:$TAG
+```
+
+### Forwarding ssh-agent's socket
+
+```sh
+ssh-agent bash
+ssh-add $HOME/.ssh/id_rsa
+docker run -it --rm \
+  -v `pwd`:/app \
+  -v $(dirname $SSH_AUTH_SOCK):/ssh \
+  -e SSH_AUTH_SOCK=/ssh/$(basename $SSH_AUTH_SOCK) \
+  -e APP_PKG_NAME="github.com/my-login/my-app-repo"
 ```
